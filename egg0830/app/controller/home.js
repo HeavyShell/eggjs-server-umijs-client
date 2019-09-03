@@ -14,6 +14,8 @@ class HomeController extends Controller {
       data:res.data,
     };
     ctx.set('total', res.total);
+    const cache=this.ctx.app.cache;
+    ctx.set('auto-catch-time', cache&&cache.time||'');
     ctx.status = 200;
 
   }
