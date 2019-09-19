@@ -42,6 +42,8 @@
 
 （3）效果https://blog.csdn.net/xw505501936/article/details/100315011
 
+（4）用户名密码：admin|123456
+
 
 
 
