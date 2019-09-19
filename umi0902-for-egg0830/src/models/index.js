@@ -76,6 +76,14 @@ export default {
           const dataPrev = yield call(queryList, {...payload, currentPage:currentPage-1, pageSize});
       
           if(dataPrev.data.success){
+
+            yield put({
+              type:'login/setToken',
+              payload:{
+                token:dataPrev.headers.token
+              }
+            })
+            
             yield put({
               type:'setListData',
               payload:{
@@ -85,9 +93,21 @@ export default {
                 total:dataPrev.headers['total']
               }
             })
-          } 
+          }else{
+            if(dataPrev.data.status==401){
+              router.push(`/login`);
+            }
+          }
 
         }else{
+
+          yield put({
+            type:'login/setToken',
+            payload:{
+              token:data.headers.token
+            }
+          })
+          
           yield put({
             type:'setListData',
             payload:{
@@ -99,6 +119,10 @@ export default {
           })
         }
 
+      }else{
+        if(data.data.status==401){
+          router.push(`/login`);
+        }
       }
 
     },
@@ -107,15 +131,27 @@ export default {
       payload
     },{call, put, select}){
 
-      const {data} = yield call(queryInfo, {...payload});
+      const data = yield call(queryInfo, {...payload});
       
-      if(data.success){   
+      if(data.data.success){   
+        
+        yield put({
+          type:'login/setToken',
+          payload:{
+            token:data.headers.token
+          }
+        })
+
         yield put({
           type:'setInfoData',
           payload:{
-            info:data.data
+            info:data.data.data
           }
         })
+      }else{
+        if(data.data.status==401){
+          router.push(`/login`);
+        }
       }
 
     },
@@ -124,10 +160,22 @@ export default {
       payload
     },{call, put, select}){
 
-      const {data} = yield call(modifyInfo, {...payload});
+      const data = yield call(modifyInfo, {...payload});
       
-      if(data.success){   
+      if(data.data.success){
+
+        yield put({
+          type:'login/setToken',
+          payload:{
+            token:data.headers.token
+          }
+        })   
+
         router.goBack();
+      }else{
+        if(data.data.status==401){
+          router.push(`/login`);
+        }
       }
 
     },
@@ -136,15 +184,27 @@ export default {
       payload
     },{call, put, select}){
 
-      const {data} = yield call(deleteInfo, {...payload});
+      const data = yield call(deleteInfo, {...payload});
       
-      if(data.success){   
+      if(data.data.success){ 
+
+        yield put({
+          type:'login/setToken',
+          payload:{
+            token:data.headers.token
+          }
+        })
+
         yield put({
           type: 'queryList',
           payload:{
 
           }
         })
+      }else{
+        if(data.data.status==401){
+          router.push(`/login`);
+        }
       }
 
     },

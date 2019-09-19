@@ -7,22 +7,44 @@ class LoginController extends Controller {
   async index() {
     const { ctx } = this;
     
+    /**
+    这里设定一个账号，当然正常需从数据库中获取
+    username=admin password=123456 id=10001
+    设定jwt秘钥为abcd1234
+     */
+    
+    const username=ctx.request.body.username;
+    const password=ctx.request.body.password;
 
-    const token=jwt.sign({
-      data: {
-        id:'aaa111',
-        username:'admin'
-      }
-    }, 'abcd1234', { expiresIn: 20 }); //s为单位
+    if(username=='admin'&&password=='123456'){
+        const token=jwt.sign({
+          data: {
+            id:10001,
+            username:'admin',
+            password:'123456'
+          }
+        }, 'abcd1234', { expiresIn: 60*30 }); //s为单位
 
-    ctx.body = {
-      success:true,
-      data:'测试JWT使用demo',
-      token
-    };
+        ctx.body = {
+          success:true,
+          data:{
+            id:10001,
+            username:'admin',
+            password:'123456'
+          }
+        };
+        ctx.set('token', token);
+        ctx.status = 200;
+    }else{
+        ctx.body = {
+          success:false,
+          data:{
 
-    ctx.set('auth-token', token);
-    ctx.status = 200;
+          }
+        };
+        ctx.status = 200;
+    }
+
 
   }
 

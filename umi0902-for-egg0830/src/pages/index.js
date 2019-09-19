@@ -68,6 +68,16 @@ const Comp=({dispatch,blog}) => {
 
   return (
     <div className={styles.list}>
+      <div style={{textAlign:'right'}}>
+        <Button type={'default'} size={'small'} onClick={()=>{
+          dispatch({
+            type:'login/logout',
+            payload:{
+              
+            }
+          })
+        }}>退出</Button>
+      </div>
       <Table 
         columns={columns} 
         dataSource={data} 

@@ -42,7 +42,14 @@ module.exports = appInfo => {
   }
 
   // add your middleware config here
-  config.middleware = [];
+  config.middleware = [
+    'tokenVerify'
+  ];
+
+  // 配置 tokenVerify 中间件的配置
+  config.tokenVerify={
+    ignore:['/api/login']
+  };
 
   // add your user config here
   const userConfig = {
