@@ -13,7 +13,9 @@ class HomeService extends Service {
   }
 
   async info(id) {
-    const results = await this.app.mysql.get('eggjs_blog' , { id:id });
+    // const results = await this.app.mysql.get('eggjs_blog' , { id:id });
+    // 此处demo，仅在查询详情的service中使用model形式获取数据
+    const results = await this.app.model.Blog.findOne({'where':{ id:id }});
     return {
       success:results?true:false,
       data:results || {}

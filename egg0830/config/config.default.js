@@ -35,6 +35,16 @@ module.exports = appInfo => {
     agent: false,
   }
 
+  //sequelize数据库配置
+  config.sequelize = {
+    dialect: 'mysql',
+    host: '127.0.0.1',
+    port: '3306',
+    database: 'test',
+    username: 'admin',
+    password: '123456',
+  }
+
   config.security= {
     csrf : {
       enable: false, //开发环境关闭此项，便于跨域请求通过post put delet请求
